@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ODS_FIELDS = ['Timestamp',
  'Link to Qt DevNet profile',
  'Qt BugReports profile',
@@ -58,3 +60,35 @@ FIELD_DICT = {
 	'Arriving From': 'ignore',
 	'Reasons to be sponsored': 'ignore',
 	}
+
+
+if __name__ == '__main__':
+	if len(sys.argv) < 3:
+		print 'usage: %s <odsfile.csv> <csvfile.csv>'
+		sys.exit(1)
+	odsfile = open(sys.argv[1], 'rb')
+	csvfile = open(sys.argv[2], 'rb')
+	odsdialect = csv.Sniffer().sniff(odsfile.read(1024))
+	csvdialect = csv.Sniffer().sniff(csvfile.read(1024))
+	odsfile.seek(0)
+	csvfile.seek(0)
+	# build CSV data for lookup
+	csvreader = csv.reader(csvfile, csvdialect)
+	csvheader = csvreader.next()
+	cvsdata = {}
+	for l in csvreader:
+		cvsdata[l[13]] = l
+	# build ODS data for iteration
+	odsreader = csv.reader(odsfile, odsdialect)
+	odsheader = odsreader.next()
+	odsdata = {}
+	for l in odsreader:
+		odsdata[l[
+		
+
+
+
+
+	
+		
+		
