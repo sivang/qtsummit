@@ -17,8 +17,6 @@ ODS_FIELDS = ['Timestamp',
  'Country',
  'Arriving From',
  'Reason to be sponsored']
-
-
 CSV_FIELDS = ['full-name',
  'nickname',
  'affiliation',
@@ -37,5 +35,24 @@ CSV_FIELDS = ['full-name',
 
 # this takes ODS field index and converts it
 # to CSV field index.
-CSV_FIELD_DICT = {
+FIELD_DICT = {
+	'Timestamp' : 14,
+	'Link to Qt DevNet profile' : 6,
+	'Qt BugReports profile' : 'ignore',
+	'Full Name': 0,
+	'Affiliation' : 2,
+	'Reasons for attending': 4,
+	'Invited by?': 5,
+	'Visa support?': 10,
+	'Travel sponsorship?': 8,
+	'T Shirt Size': 11,
+	'T Shirt Style': 12,
+	'Travel cost (estimate)': 'ignore',
+	'Email address': 13,
+	'What coverage do you need?': 'ignore',
+	'Nick': 1,
+	'Interests': 3,
+	'Country': 9,
+	'Arriving From': 'ignore',
+	'Reasons to be sponsored': 'ignore',
 	}
