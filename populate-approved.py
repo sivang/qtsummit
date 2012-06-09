@@ -17,6 +17,8 @@ ODS_FIELDS = ['Timestamp',
  'Country',
  'Arriving From',
  'Reason to be sponsored']
+
+
 CSV_FIELDS = ['full-name',
  'nickname',
  'affiliation',
