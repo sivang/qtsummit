@@ -122,7 +122,19 @@ if __name__ == '__main__':
 		else:
 			# rearrange approved fields to match
 			# applied_data 's columns.
-			pass
+			t = []
+			approved_row = approved_data[key]
+			for i in range(0,len(approved_row)):
+				t.append(approved_row[INVDICT[i]])
+			merged[key] = t
+	ofile = open("merged-output.csv", 'wb')
+	write = csv.writer(ofile, dialect=applied_dialect)
+	for i in merged:
+		writer.writerow(merged[i])
+	ofile.close()
+
+	
+				
 
 		
 		
