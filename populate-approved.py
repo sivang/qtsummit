@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 
 ODS_FIELDS = ['Timestamp',
  'Link to Qt DevNet profile',
@@ -19,6 +20,7 @@ ODS_FIELDS = ['Timestamp',
  'Country',
  'Arriving From',
  'Reason to be sponsored']
+
 
 
 CSV_FIELDS = ['full-name',
@@ -42,7 +44,7 @@ CSV_FIELDS = ['full-name',
 FIELD_DICT = {
 	'Timestamp' : 14,
 	'Link to Qt DevNet profile' : 6,
-	'Qt BugReports profile' : 'ignore',
+	'Qt BugReports profile' : 7,
 	'Full Name': 0,
 	'Affiliation' : 2,
 	'Reasons for attending': 4,
@@ -61,29 +63,46 @@ FIELD_DICT = {
 	'Reasons to be sponsored': 'ignore',
 	}
 
+# created an inversed dict for the inverse lookup
+
+INVDICT = dict((y,x) for x,y in FIELD_DICT.iteritems() if y!='ignore')
+
+print INVDICT
 
 if __name__ == '__main__':
 	if len(sys.argv) < 3:
-		print 'usage: %s <odsfile.csv> <csvfile.csv>'
+		print 'usage: %s <approved.csv> <applied.csv>'
 		sys.exit(1)
-	odsfile = open(sys.argv[1], 'rb')
-	csvfile = open(sys.argv[2], 'rb')
-	odsdialect = csv.Sniffer().sniff(odsfile.read(1024))
-	csvdialect = csv.Sniffer().sniff(csvfile.read(1024))
-	odsfile.seek(0)
-	csvfile.seek(0)
-	# build CSV data for lookup
-	csvreader = csv.reader(csvfile, csvdialect)
-	csvheader = csvreader.next()
-	cvsdata = {}
-	for l in csvreader:
-		cvsdata[l[13]] = l
-	# build ODS data for iteration
-	odsreader = csv.reader(odsfile, odsdialect)
-	odsheader = odsreader.next()
-	odsdata = {}
-	for l in odsreader:
-		odsdata[l[
+	approved = open(sys.argv[1], 'rb')
+	applied  = open(sys.argv[2], 'rb')
+	approved_dialect = csv.Sniffer().sniff(approved.read(1024))
+	applied_dialect = csv.Sniffer().sniff(applied.read(1024))
+	approved.seek(0)
+	applied.seek(0)
+	# build applied CSV data for lookup
+	applied_reader = csv.reader(applied, applied_dialect)
+	applied_header = applied_reader.next()
+	applied_data = {}
+	for l in applied_reader:
+		applied_data[l[13]] = l
+	# build approved data for iteration
+	approved_reader = csv.reader(approved, approved_dialect)
+	approved_header = approved_reader.next()
+	approved_data = {}
+	for l in approved_reader:
+		approved_data[l[12]] = l
+	# the real thing
+	merged = {}
+	for key in approved_reader:
+		# key is email
+		if key in applied_data:
+			merged[key] = applied_data[key]
+		else:
+			# rearrange approved fields to match
+			# applied_data 's columns.
+			pass
+
+		
 		
 
 
