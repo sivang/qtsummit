@@ -93,10 +93,11 @@ print INVDICT
 
 if __name__ == '__main__':
 	if len(sys.argv) < 3:
-		print 'usage: %s <approved.csv> <applied.csv>'
+		print 'usage: %s <approved.csv> <applied.csv>' % sys.argv[0]
 		sys.exit(1)
 	approved = open(sys.argv[1], 'rb')
 	applied  = open(sys.argv[2], 'rb')
+	import csv
 	approved_dialect = csv.Sniffer().sniff(approved.read(1024))
 	applied_dialect = csv.Sniffer().sniff(applied.read(1024))
 	approved.seek(0)
@@ -115,7 +116,7 @@ if __name__ == '__main__':
 		approved_data[l[12]] = l
 	# the real thing
 	merged = {}
-	for key in approved_reader:
+	for key in approved_data:
 		# key is email
 		if key in applied_data:
 			merged[key] = applied_data[key]
@@ -124,11 +125,12 @@ if __name__ == '__main__':
 			# applied_data 's columns.
 			t = []
 			approved_row = approved_data[key]
-			for i in range(0,len(approved_row)):
+			for i in range(0,len(CSV_FIELDS)-1):
+				print "i = %s" %i
 				t.append(approved_row[INVDICT[i]])
 			merged[key] = t
 	ofile = open("merged-output.csv", 'wb')
-	write = csv.writer(ofile, dialect=applied_dialect)
+	writer = csv.writer(ofile, dialect=applied_dialect)
 	for i in merged:
 		writer.writerow(merged[i])
 	ofile.close()
