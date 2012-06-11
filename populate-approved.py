@@ -129,6 +129,8 @@ if __name__ == '__main__':
 				print "i = %s" %i
 				t.append(approved_row[INVDICT[i]])
 			merged[key] = t
+	for key in applied_data:
+		merged[key] = applied_data[key]
 	ofile = open("merged-output.csv", 'wb')
 	writer = csv.writer(ofile, dialect=applied_dialect)
 	writer.writerow(CSV_FIELDS)
