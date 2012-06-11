@@ -63,9 +63,31 @@ FIELD_DICT = {
 	'Reasons to be sponsored': 'ignore',
 	}
 
+ODS_TO_CSV_DICT = {
+	0 : 14,
+	1 : 6,
+	2 : 7,
+	3 : 0,
+	4 : 2,
+	5 : 4,
+	6 : 5,
+	7 : 10,
+	8 : 8,
+	9 : 11,
+	10: 12,
+	11: 'ignore',
+	12: 13,
+	13: 'ignore',
+	14: 1,
+	15: 3,
+	16: 9,
+	17: 'ignore',
+	18: 'ignore',
+	}
+
 # created an inversed dict for the inverse lookup
 
-INVDICT = dict((y,x) for x,y in FIELD_DICT.iteritems() if y!='ignore')
+INVDICT = dict((y,x) for x,y in ODS_TO_CSV_DICT.iteritems() if y!='ignore')
 
 print INVDICT
 
